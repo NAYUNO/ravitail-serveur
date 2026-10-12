@@ -43,7 +43,7 @@ const CAMPAGNES = [
     du: "09-21", au: "12-20",
     titre: "L'automne arrive",
     texte: "3 nouvelles recettes de saison rien que pour vous — courges, champignons et douceurs réconfortantes.",
-    image: "", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
+    image: "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
     promo: "Offre d'automne : -30% sur le Premium pendant tout octobre.",
     couleur: "#b5622a",
     vedette: {
