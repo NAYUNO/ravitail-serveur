@@ -36,14 +36,14 @@ const PORT = parseInt(process.env.PORT || "8080", 10);
 //               { titre, image, accroche, temps, personnes, ingredients:[...], etapes:[...] }
 //  - recettes : les autres recettes "à venir / à débloquer" (titre, image, accroche, verrouillées)
 // Pour l'IMAGE : mets l'URL d'une image hébergée (ex. GitHub), ou "" pour un dégradé.
-//   ex. "https://nayuno.github.io/ravitail-legal/recettes/butternut.jpg"
+//   ex. "https://nayuno.github.io/ravitail-legal/veloutecourgerotie.jpg"
 const CAMPAGNES = [
   {
     id: "automne-2026",
     du: "09-21", au: "12-20",
     titre: "L'automne arrive",
     texte: "3 nouvelles recettes de saison rien que pour vous — courges, champignons et douceurs réconfortantes.",
-    image: "https://nayuno.github.io/ravitail-legal/recettes/veloutedecourgerotie.jpg", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
+    image: "https://nayuno.github.io/ravitail-legal/veloutecourgerotie.jpg", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
     promo: "Offre d'automne : -30% sur le Premium pendant tout octobre.",
     couleur: "#b5622a",
     vedette: {
@@ -69,8 +69,8 @@ const CAMPAGNES = [
       ],
     },
     recettes: [
-      { titre: "Risotto aux champignons", image: "", accroche: "Crémeux, parfumé, parfait pour les soirées fraîches." },
-      { titre: "Tarte aux pommes & cannelle", image: "", accroche: "La douceur d'automne qui embaume toute la maison." },
+      { titre: "Risotto aux champignons", image: "https://nayuno.github.io/ravitail-legal/risottochampignon.jpg", accroche: "Crémeux, parfumé, parfait pour les soirées fraîches." },
+      { titre: "Tarte aux pommes & cannelle", image: "https://nayuno.github.io/ravitail-legal/tartepommecannelle.jpg", accroche: "La douceur d'automne qui embaume toute la maison." },
     ],
   },
   {
