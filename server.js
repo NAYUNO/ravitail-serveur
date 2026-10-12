@@ -263,12 +263,17 @@ const server = http.createServer(async (req, res) => {
   if (!stock) return json(res, 400, { erreur: "Stock vide." });
 
   const prompt = construirePrompt({ stock, personnes, envie });
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODELE}:generateContent?key=${encodeURIComponent(GEMINI_API_KEY)}`;
+  // La clé est envoyée dans l'en-tête x-goog-api-key : compatible avec les deux
+  // formats de clé Gemini (ancien "AIza…" et nouveau "AQ…").
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODELE}:generateContent`;
 
   try {
     const r = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": GEMINI_API_KEY,
+      },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: { temperature: 0.7, responseMimeType: "application/json" },
