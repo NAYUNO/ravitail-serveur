@@ -232,6 +232,25 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, { campagne: c }); // { campagne: null } si aucune
   }
 
+  // Diagnostic : liste les modèles disponibles POUR TA CLÉ (ouvre /modeles dans le navigateur)
+  if (req.method === "GET" && req.url === "/modeles") {
+    if (!GEMINI_API_KEY) return json(res, 500, { erreur: "Clé manquante." });
+    try {
+      const r = await fetch("https://generativelanguage.googleapis.com/v1beta/models", {
+        headers: { "x-goog-api-key": GEMINI_API_KEY },
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) return json(res, r.status, { erreur: "Erreur Google", detail: data });
+      // on ne renvoie que les noms utiles pour la génération de recettes
+      const noms = (data.models || [])
+        .filter((m) => (m.supportedGenerationMethods || []).includes("generateContent"))
+        .map((m) => (m.name || "").replace(/^models\//, ""));
+      return json(res, 200, { modeleActuel: MODELE, modelesDisponibles: noms });
+    } catch (e) {
+      return json(res, 500, { erreur: "Impossible de lister", detail: String(e) });
+    }
+  }
+
   if (req.method !== "POST" || req.url !== "/recette") {
     return json(res, 404, { erreur: "Route inconnue." });
   }
