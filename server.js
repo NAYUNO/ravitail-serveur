@@ -48,7 +48,7 @@ const CAMPAGNES = [
     couleur: "#b5622a",
     vedette: {
       titre: "Velouté de butternut rôtie",
-      image: "https://github.com/NAYUNO/ravitail-serveur/blob/main/veloutecourgerotie.jpg",
+      image: "https://github.com/NAYUNO/ravitail-legal/blob/main/veloutecourgerotie.jpg",
       accroche: "Onctueux et réconfortant, le plat d'automne par excellence.",
       temps: "40 min", personnes: 4,
       ingredients: [
