@@ -33,19 +33,22 @@ const PORT = parseInt(process.env.PORT || "8080", 10);
 // ============================================================
 // Chaque campagne peut porter :
 //  - vedette  : la recette mise en avant (ouvrable en entier)
-//               { titre, accroche, temps, personnes, ingredients:[...], etapes:[...] }
-//  - recettes : les autres recettes "à venir / à débloquer" (titre + accroche, verrouillées)
+//               { titre, image, accroche, temps, personnes, ingredients:[...], etapes:[...] }
+//  - recettes : les autres recettes "à venir / à débloquer" (titre, image, accroche, verrouillées)
+// Pour l'IMAGE : mets l'URL d'une image hébergée (ex. GitHub), ou "" pour un dégradé.
+//   ex. "https://nayuno.github.io/ravitail-legal/recettes/butternut.jpg"
 const CAMPAGNES = [
   {
     id: "automne-2026",
     du: "09-21", au: "12-20",
     titre: "L'automne arrive",
     texte: "3 nouvelles recettes de saison rien que pour vous — courges, champignons et douceurs réconfortantes.",
-    image: "https://nayuno.github.io/ravitail-legal/automne.jpg", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
+    image: "", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
     promo: "Offre d'automne : -30% sur le Premium pendant tout octobre.",
     couleur: "#b5622a",
     vedette: {
       titre: "Velouté de butternut rôtie",
+      image: "",
       accroche: "Onctueux et réconfortant, le plat d'automne par excellence.",
       temps: "40 min", personnes: 4,
       ingredients: [
@@ -66,8 +69,8 @@ const CAMPAGNES = [
       ],
     },
     recettes: [
-      { titre: "Risotto aux champignons", accroche: "Crémeux, parfumé, parfait pour les soirées fraîches." },
-      { titre: "Tarte aux pommes & cannelle", accroche: "La douceur d'automne qui embaume toute la maison." },
+      { titre: "Risotto aux champignons", image: "", accroche: "Crémeux, parfumé, parfait pour les soirées fraîches." },
+      { titre: "Tarte aux pommes & cannelle", image: "", accroche: "La douceur d'automne qui embaume toute la maison." },
     ],
   },
   {
@@ -80,6 +83,7 @@ const CAMPAGNES = [
     couleur: "#8a3a12",
     vedette: {
       titre: "Soupe de potiron des sorcières",
+      image: "",
       accroche: "Une soupe orange et fumante, à servir dans un potiron évidé pour l'effet.",
       temps: "35 min", personnes: 4,
       ingredients: [
@@ -99,8 +103,8 @@ const CAMPAGNES = [
       ],
     },
     recettes: [
-      { titre: "Doigts de sorcière (sablés)", accroche: "Des biscuits amusants et croquants pour effrayer les gourmands." },
-      { titre: "Pommes d'amour caramel", accroche: "Le classique brillant et croquant des fêtes d'automne." },
+      { titre: "Doigts de sorcière (sablés)", image: "", accroche: "Des biscuits amusants et croquants pour effrayer les gourmands." },
+      { titre: "Pommes d'amour caramel", image: "", accroche: "Le classique brillant et croquant des fêtes d'automne." },
     ],
   },
   {
@@ -113,6 +117,7 @@ const CAMPAGNES = [
     couleur: "#9a7635",
     vedette: {
       titre: "Suprêmes de volaille, sauce aux marrons",
+      image: "",
       accroche: "Un plat de fête tendre et parfumé, simple à réussir.",
       temps: "50 min", personnes: 4,
       ingredients: [
@@ -132,10 +137,28 @@ const CAMPAGNES = [
       ],
     },
     recettes: [
-      { titre: "Bûche chocolat-praliné", accroche: "Le dessert de Noël incontournable, fondant à souhait." },
-      { titre: "Verrines saumon-avocat", accroche: "Une entrée fraîche et élégante pour ouvrir le repas." },
+      { titre: "Bûche chocolat-praliné", image: "", accroche: "Le dessert de Noël incontournable, fondant à souhait." },
+      { titre: "Verrines saumon-avocat", image: "", accroche: "Une entrée fraîche et élégante pour ouvrir le repas." },
     ],
   },
+];
+
+// ============================================================
+//  RECETTES PERMANENTES — le catalogue qui s'enrichit saison après saison.
+//  Quand une campagne se termine, copie ici ses recettes pour qu'elles restent
+//  dans la bibliothèque. Même format que la vedette (ouvrables en entier).
+//  Pilotable à distance : édite cette liste et redéploie le serveur.
+// ============================================================
+const RECETTES_PERMANENTES = [
+  // Exemple (décommente / adapte quand une campagne finit) :
+  // {
+  //   titre: "Velouté de butternut rôtie",
+  //   image: "https://nayuno.github.io/ravitail-legal/recettes/butternut.jpg",
+  //   accroche: "Onctueux et réconfortant.",
+  //   temps: "40 min", personnes: 4,
+  //   ingredients: ["1 courge butternut", "1 oignon", "..."],
+  //   etapes: ["Épluchez la courge…", "..."],
+  // },
 ];
 
 function campagneActive(d = new Date()) {
@@ -226,10 +249,10 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, { ok: true, service: "ravitail-gemini", modele: MODELE });
   }
 
-  // Campagne saisonnière active (consultable librement par l'app)
+  // Campagne saisonnière active + recettes permanentes (consultable par l'app)
   if (req.method === "GET" && req.url === "/campagne") {
     const c = campagneActive();
-    return json(res, 200, { campagne: c }); // { campagne: null } si aucune
+    return json(res, 200, { campagne: c, permanentes: RECETTES_PERMANENTES });
   }
 
   // Diagnostic : liste les modèles disponibles POUR TA CLÉ (ouvre /modeles dans le navigateur)
