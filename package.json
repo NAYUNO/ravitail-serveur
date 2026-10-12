@@ -1,0 +1,13 @@
+{
+  "name": "ravitail-gemini-proxy",
+  "version": "1.0.0",
+  "description": "Mini-serveur proxy Gemini pour l'application Ravitail",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
