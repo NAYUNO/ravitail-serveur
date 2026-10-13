@@ -33,32 +33,34 @@ const PORT = parseInt(process.env.PORT || "8080", 10);
 // ============================================================
 // Chaque campagne peut porter :
 //  - vedette  : la recette mise en avant (ouvrable en entier)
-//               { titre, image, accroche, temps, personnes, ingredients:[...], etapes:[...] }
+//   { titre, image, accroche, temps, personnes,
+//     ingredients:[ { nom, quantite, unite }, ... ],   // format structuré = quantités ajustables + ajout aux courses
+//     etapes:[ "...", "..." ] }
 //  - recettes : les autres recettes "à venir / à débloquer" (titre, image, accroche, verrouillées)
 // Pour l'IMAGE : mets l'URL d'une image hébergée (ex. GitHub), ou "" pour un dégradé.
-//   ex. "https://nayuno.github.io/ravitail-legal/veloutecourgerotie.jpg"
+//   ex. "https://nayuno.github.io/ravitail-legal/recettes/butternut.jpg"
 const CAMPAGNES = [
   {
     id: "automne-2026",
     du: "09-21", au: "12-20",
     titre: "L'automne arrive",
     texte: "3 nouvelles recettes de saison rien que pour vous — courges, champignons et douceurs réconfortantes.",
-    image: "https://nayuno.github.io/ravitail-legal/veloutecourgerotie.jpg", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
+    image: "", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
     promo: "Offre d'automne : -30% sur le Premium pendant tout octobre.",
     couleur: "#b5622a",
     vedette: {
       titre: "Velouté de butternut rôtie",
-      image: "https://nayuno.github.io/ravitail-legal/veloutecourgerotie.jpg",
+      image: "",
       accroche: "Onctueux et réconfortant, le plat d'automne par excellence.",
       temps: "40 min", personnes: 4,
       ingredients: [
-        "1 courge butternut (environ 1 kg)",
-        "1 oignon",
-        "2 gousses d'ail",
-        "40 cl de bouillon de légumes",
-        "10 cl de crème fraîche",
-        "2 c. à soupe d'huile d'olive",
-        "Sel, poivre, muscade",
+        { nom: "Courge butternut", quantite: 1, unite: "kg" },
+        { nom: "Oignon", quantite: 1, unite: "pièce" },
+        { nom: "Gousses d'ail", quantite: 2, unite: "pièce" },
+        { nom: "Bouillon de légumes", quantite: 40, unite: "cl" },
+        { nom: "Crème fraîche", quantite: 10, unite: "cl" },
+        { nom: "Huile d'olive", quantite: 2, unite: "c. à soupe" },
+        { nom: "Sel, poivre, muscade", quantite: 1, unite: "pincée" },
       ],
       etapes: [
         "Épluchez la butternut, coupez-la en cubes. Émincez l'oignon et l'ail.",
@@ -69,8 +71,51 @@ const CAMPAGNES = [
       ],
     },
     recettes: [
-      { titre: "Risotto aux champignons", image: "https://nayuno.github.io/ravitail-legal/risottochampignon.jpg", accroche: "Crémeux, parfumé, parfait pour les soirées fraîches." },
-      { titre: "Tarte aux pommes & cannelle", image: "https://nayuno.github.io/ravitail-legal/tartepommecannelle.jpg", accroche: "La douceur d'automne qui embaume toute la maison." },
+      {
+        titre: "Risotto aux champignons",
+        image: "",
+        accroche: "Crémeux, parfumé, parfait pour les soirées fraîches.",
+        temps: "35 min", personnes: 4,
+        ingredients: [
+          { nom: "Riz arborio", quantite: 300, unite: "g" },
+          { nom: "Champignons de Paris", quantite: 400, unite: "g" },
+          { nom: "Oignon", quantite: 1, unite: "pièce" },
+          { nom: "Bouillon de légumes", quantite: 1, unite: "L" },
+          { nom: "Vin blanc sec", quantite: 10, unite: "cl" },
+          { nom: "Parmesan râpé", quantite: 60, unite: "g" },
+          { nom: "Beurre", quantite: 30, unite: "g" },
+          { nom: "Huile d'olive", quantite: 2, unite: "c. à soupe" },
+          { nom: "Sel, poivre, persil", quantite: 1, unite: "pincée" },
+        ],
+        etapes: [
+          "Émincez l'oignon et les champignons. Faites chauffer le bouillon et gardez-le au chaud.",
+          "Dans une sauteuse, faites revenir l'oignon dans l'huile, puis ajoutez les champignons et laissez-les dorer.",
+          "Ajoutez le riz, remuez 1 min jusqu'à ce qu'il devienne translucide, puis versez le vin blanc.",
+          "Ajoutez le bouillon louche par louche, en remuant, en attendant qu'il soit absorbé à chaque fois (18-20 min).",
+          "Hors du feu, incorporez le beurre et le parmesan. Assaisonnez, parsemez de persil et servez aussitôt.",
+        ],
+      },
+      {
+        titre: "Tarte aux pommes & cannelle",
+        image: "",
+        accroche: "La douceur d'automne qui embaume toute la maison.",
+        temps: "55 min", personnes: 6,
+        ingredients: [
+          { nom: "Pâte brisée", quantite: 1, unite: "pièce" },
+          { nom: "Pommes", quantite: 5, unite: "pièce" },
+          { nom: "Sucre", quantite: 80, unite: "g" },
+          { nom: "Cannelle en poudre", quantite: 2, unite: "c. à café" },
+          { nom: "Beurre", quantite: 30, unite: "g" },
+          { nom: "Confiture d'abricot", quantite: 2, unite: "c. à soupe" },
+        ],
+        etapes: [
+          "Préchauffez le four à 180 °C. Étalez la pâte dans un moule et piquez le fond à la fourchette.",
+          "Épluchez et coupez les pommes en fines lamelles.",
+          "Disposez les lamelles en rosace sur la pâte. Saupoudrez de sucre et de cannelle, parsemez de noisettes de beurre.",
+          "Enfournez 35-40 min jusqu'à ce que les pommes soient dorées.",
+          "À la sortie du four, lustrez avec la confiture d'abricot légèrement tiédie. Laissez tiédir avant de servir.",
+        ],
+      },
     ],
   },
   {
@@ -87,13 +132,13 @@ const CAMPAGNES = [
       accroche: "Une soupe orange et fumante, à servir dans un potiron évidé pour l'effet.",
       temps: "35 min", personnes: 4,
       ingredients: [
-        "800 g de potiron",
-        "1 oignon",
-        "1 pomme de terre",
-        "50 cl de bouillon de volaille",
-        "10 cl de crème",
-        "1 c. à café de cumin",
-        "Sel, poivre, graines de courge",
+        { nom: "Potiron", quantite: 800, unite: "g" },
+        { nom: "Oignon", quantite: 1, unite: "pièce" },
+        { nom: "Pomme de terre", quantite: 1, unite: "pièce" },
+        { nom: "Bouillon de volaille", quantite: 50, unite: "cl" },
+        { nom: "Crème", quantite: 10, unite: "cl" },
+        { nom: "Cumin", quantite: 1, unite: "c. à café" },
+        { nom: "Sel, poivre, graines de courge", quantite: 1, unite: "pincée" },
       ],
       etapes: [
         "Épluchez et coupez le potiron et la pomme de terre en morceaux. Émincez l'oignon.",
@@ -121,13 +166,13 @@ const CAMPAGNES = [
       accroche: "Un plat de fête tendre et parfumé, simple à réussir.",
       temps: "50 min", personnes: 4,
       ingredients: [
-        "4 suprêmes de volaille",
-        "200 g de marrons cuits",
-        "2 échalotes",
-        "20 cl de crème",
-        "10 cl de vin blanc",
-        "1 noix de beurre",
-        "Sel, poivre, thym",
+        { nom: "Suprêmes de volaille", quantite: 4, unite: "pièce" },
+        { nom: "Marrons cuits", quantite: 200, unite: "g" },
+        { nom: "Échalotes", quantite: 2, unite: "pièce" },
+        { nom: "Crème", quantite: 20, unite: "cl" },
+        { nom: "Vin blanc", quantite: 10, unite: "cl" },
+        { nom: "Beurre", quantite: 1, unite: "noix" },
+        { nom: "Sel, poivre, thym", quantite: 1, unite: "pincée" },
       ],
       etapes: [
         "Faites dorer les suprêmes au beurre, réservez-les.",
