@@ -97,7 +97,7 @@ const CAMPAGNES = [
       },
       {
         titre: "Tarte aux pommes & cannelle",
-        image: "https://nayuno.github.io/ravitail-legal/tartepommecanelle.jpg",
+        image: "https://nayuno.github.io/ravitail-legal/tartepommecannelle.jpg",
         accroche: "La douceur d'automne qui embaume toute la maison.",
         temps: "55 min", personnes: 6,
         ingredients: [
