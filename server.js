@@ -73,7 +73,7 @@ const CAMPAGNES = [
     recettes: [
       {
         titre: "Risotto aux champignons",
-        image: "https://github.com/NAYUNO/ravitail-legal/blob/fb01b0b3f805f57f4b2aff8651c03e3518a73999/risottochampignon.jpg",
+        image: "https://nayuno.github.io/ravitail-legal/risottochampignon.jpg",
         accroche: "Crémeux, parfumé, parfait pour les soirées fraîches.",
         temps: "35 min", personnes: 4,
         ingredients: [
