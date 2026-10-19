@@ -45,12 +45,12 @@ const CAMPAGNES = [
     du: "09-21", au: "12-20",
     titre: "L'automne arrive",
     texte: "3 nouvelles recettes de saison rien que pour vous — courges, champignons et douceurs réconfortantes.",
-    image: "", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
+    image: "https://nayuno.github.io/ravitail-legal/veloutecourgerotie.jpg", // ex. "https://nayuno.github.io/ravitail-legal/campagnes/automne.jpg"
     promo: "Offre d'automne : -30% sur le Premium pendant tout octobre.",
     couleur: "#b5622a",
     vedette: {
       titre: "Velouté de butternut rôtie",
-      image: "",
+      image: "https://nayuno.github.io/ravitail-legal/veloutecourgerotie.jpg",
       accroche: "Onctueux et réconfortant, le plat d'automne par excellence.",
       temps: "40 min", personnes: 4,
       ingredients: [
@@ -97,7 +97,7 @@ const CAMPAGNES = [
       },
       {
         titre: "Tarte aux pommes & cannelle",
-        image: "",
+        image: "https://nayuno.github.io/ravitail-legal/tartepommecannelle.jpg",
         accroche: "La douceur d'automne qui embaume toute la maison.",
         temps: "55 min", personnes: 6,
         ingredients: [
